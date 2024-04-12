@@ -40,7 +40,7 @@
             <div class="card w-100 w-lg-400px">
                 <div class="card-body">
                     <form action="{{ url('sign-in') }}" method="post" id="form-sign-in" onsubmit="handleSignIn(event)">
-                        @crsf
+                        <!-- @crsf -->
                         <div class="text-center mb-10">
                             <h1>Bedtime Stories</h1>
                             <div class="text-gray-400 fw-bold fs-4">
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <button class="btn btn-lg btn-warning btn-submit fw-bolder" id="submit" type="submit" onclick="Button()">Sign In</button>
+                            <button class="btn btn-lg btn-warning btn-submit fw-bolder" id="submit" type="submit">Sign In</button>
                         </div>
                     </form>
 
@@ -93,7 +93,7 @@
         let textEmail = document.getElementById('email');
         let textPassword = document.getElementById('password');
         let submitButton = document.getElementById('submit');
-    
+
         const handleSignIn = (event) => {
             event.preventDefault();
             let email = textEmail.value;
@@ -104,28 +104,33 @@
             }else if(password === ""){
                 alert("password tidak boleh kosong")
             }else{
+                submitButton.innerText = "Loading...";
                 if(email === "222310067@student.ibik.ac.id" && password === "222310067"){
-                    submitButton.innerText = "Success Sign In";
-                    textEmail.value = "";
-                    textPassword.value = "";
                     setTimeout(() => {
+                        submitButton.textContent = "Successful Sign In";
+                        textEmail.value = "";
+                        textPassword.value = "";
+                        setTimeout(() => {
+                            submitButton.textContent = "Sign In";
+                            alert("Email : " + email + " Password : " + password)
+                            target.submit();
+                        }, 2000);
+                    }, 2000);
+                }else{
                     submitButton.textContent = "Sign In";
-                    alert("Welcome");
-                    target.submit();
-            }, 1000);
-        }else{
-            alert("username tidak ditemukan")
+                    alert("username tidak ditemukan")
+                }
+            }
         }
-    }
-}
-function showPass(){
-    let password = textPassword.type;
-    console.log(password)
-    textPassword.type = (password === "password") ? "text" : "password";
-    let eyeIcon = document.getElementById("eye-icon");
-    eyeIcon.className = (password === "password") ? "bi bi-eye-slash" : "bi bi-eye";
-    }
-</script>
+
+        function showPass(){
+            let password = textPassword.type;
+            console.log(password)
+            textPassword.type = (password === "password") ? "text" : "password";
+            let eyeIcon = document.getElementById("eye-icon");
+            eyeIcon.className = (password === "password") ? "bi bi-eye-slash" : "bi bi-eye";
+        }
+    </script>
 </body>
 
 </html>
